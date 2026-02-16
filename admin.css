@@ -1,0 +1,64 @@
+/* Admin Panel Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+.admin-table th, .admin-table td {
+  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  text-align: left;
+}
+.admin-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+.admin-table tr:nth-child(even) {
+  background: #f9fafb;
+}
+.admin-table input[type="number"] {
+  width: 80px;
+  padding: 4px;
+}
+.admin-table input[type="checkbox"] {
+  transform: scale(1.2);
+}
+.admin-table button {
+  margin-right: 6px;
+  padding: 4px 8px;
+  border: none;
+  background: #10b981;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.admin-table button:last-child {
+  background: #ef4444;
+}
+.admin-users-panel h2, .admin-actions-panel h2 {
+  margin-bottom: 16px;
+}
+.admin-actions-panel form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.admin-actions-panel input {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  flex: 1 1 120px;
+}
+.admin-actions-panel button {
+  padding: 8px 16px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.admin-actions-panel .error-message {
+  color: #ef4444;
+  margin-top: 8px;
+}

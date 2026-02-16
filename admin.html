@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - MUOMILA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .admin-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .admin-header-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .admin-stat {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .admin-logout {
+            background: rgba(255, 59, 48, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .admin-logout:hover {
+            background: #ff3b30;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 59, 48, 0.4);
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+        }
+        
+        .admin-tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: #f0f0f0;
+            color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .admin-tab-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .admin-tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .admin-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .admin-section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .admin-users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        
+        .admin-users-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .admin-users-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .admin-users-table tr:hover {
+            background: #f8f9ff;
+        }
+        
+        .admin-action-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-edit {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background: #1976D2;
+            transform: translateY(-1px);
+        }
+        
+        .btn-add-balance {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-add-balance:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
+        
+        .btn-reset {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #e68900;
+            transform: translateY(-1px);
+        }
+        
+        .btn-delete {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #da190b;
+            transform: translateY(-1px);
+        }
+        
+        .btn-block {
+            background: #FF5722;
+            color: white;
+        }
+        
+        .btn-block:hover {
+            background: #E64A19;
+            transform: translateY(-1px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .form-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .modal-close-btn {
+            float: right;
+            background: #e0e0e0;
+            color: #666;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .modal-close-btn:hover {
+            background: #d0d0d0;
+        }
+        
+        .success-message {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .info-message {
+            background: #2196F3;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-card-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div>
+                <h1>🔐 Admin Panel</h1>
+                <p style="font-size: 14px; opacity: 0.9;">MUOMILA - Foydalanuvchi Boshqaruvi Tizimi</p>
+            </div>
+            <div class="admin-header-info">
+                <div class="admin-stat">
+                    <strong>Jami Foydalanuvchi:</strong> <span id="totalUsers">0</span>
+                </div>
+                <div class="admin-stat">
+                    <strong>Jami Balans:</strong> <span id="totalBalance">0</span> so'm
+                </div>
+                <button class="admin-logout" onclick="adminLogout()">🚪 Chiqish</button>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" onclick="switchTab('users')">📊 Foydalanuvchilar</button>
+            <button class="admin-tab-btn" onclick="switchTab('create')">➕ Yangi Akkount</button>
+            <button class="admin-tab-btn" onclick="switchTab('notifications')">🔔 Bildirishnomalar</button>
+            <button class="admin-tab-btn" onclick="switchTab('settings')">⚙️ Sozlamalar</button>
+        </div>
+        
+        <!-- Content -->
+        <div class="admin-content">
+            <!-- Users Tab -->
+            <div id="users" class="admin-section active">
+                <h2>📊 Foydalanuvchilar ro'yxati</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Ism, familiya yoki email orqali qidirish..." oninput="handleSearch(event)">
+                </div>
+                
+                <div id="usersMessage" class="info-message"></div>
+                <div id="usersError" class="error-message"></div>
+                <div id="usersSuccess" class="success-message"></div>
+                
+                <table class="admin-users-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ism Familiya</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th>Balans</th>
+                            <th>Ishonch %</th>
+                            <th>Holat</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="8" style="text-align: center; padding: 20px;"><span class="loading"></span> Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Create User Tab -->
+            <div id="create" class="admin-section">
+                <h2>➕ Yangi Akkount Yaratish</h2>
+                
+                <div id="createMessage" class="info-message"></div>
+                <div id="createError" class="error-message"></div>
+                <div id="createSuccess" class="success-message"></div>
+                
+                <form id="createUserForm" onsubmit="handleCreateUser(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ism</label>
+                            <input type="text" id="createName" placeholder="Ism" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Familiya</label>
+                            <input type="text" id="createSurname" placeholder="Familiya" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="createEmail" placeholder="example@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Parol</label>
+                            <input type="password" id="createPassword" placeholder="Parol (minimalda 6 belgi)" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input type="tel" id="createPhone" placeholder="+998 90 123 45 67" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Yosh</label>
+                            <input type="number" id="createAge" placeholder="Yosh" min="0" max="150" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Jins</label>
+                            <select id="createGender" required>
+                                <option value="">Tanlang</option>
+                                <option value="Erkak">Erkak</option>
+                                <option value="Ayol">Ayol</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dastlabki Balans (so'm)</label>
+                            <input type="number" id="createBalance" placeholder="0" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="form-submit-btn">✅ Akkount Yaratish</button>
+                </form>
+            </div>
+            
+            <!-- Notifications Tab -->
+            <div id="notifications" class="admin-section">
+                <h2>🔔 Bildirishnomalarni Yuborish</h2>
+                
+                <div id="notificationInfo" class="info-message"></div>
+                <div id="notificationError" class="error-message"></div>
+                <div id="notificationSuccess" class="success-message"></div>
+                
+                <form id="sendNotificationForm" onsubmit="handleSendNotification(event)">
+                    <div class="form-group">
+                        <label>Sarlavha (Title)</label>
+                        <input type="text" id="notificationTitle" placeholder="Masalan: Yangi Xabar" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Xabar (Message)</label>
+                        <textarea id="notificationMessage" placeholder="Bildirishnoma matnini kiriting..." required style="min-height: 100px;"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tur (Type)</label>
+                            <select id="notificationType" required>
+                                <option value="info">ℹ️ Ma'lumot</option>
+                                <option value="success">✅ Muvaffaqiyatli</option>
+                                <option value="warning">⚠️ Ogohlantirish</option>
+                                <option value="error">❌ Xatolik</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Kimga Yuborish?</label>
+                            <select id="notificationTarget" required onchange="handleNotificationTargetChange()">
+                                <option value="all">👥 Hammaga</option>
+                                <option value="specific">👤 Aniq Foydalanuvchiga</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="userSelectContainer" style="display: none;">
+                        <div class="form-group">
+                            <label>Foydalanuvchini Qidirish va Tanlash</label>
+                            <input type="text" id="notificationUserSearch" placeholder="Ism, familiya yoki email orqali izlash..." oninput="handleNotificationUserSearch(event)" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+                            <select id="notificationUserId" name="notificationUserId" style="width: 100%;">
+                                <option value="">Foydalanuvchini tanlang...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="form-submit-btn" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);">
+                        🚀 Bildirishnomani Yuborish
+                    </button>
+                </form>
+                
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 30px; border-left: 4px solid #2196F3;">
+                    <strong>ℹ️ Ma'lumot</strong>
+                    <p style="margin: 10px 0 0 0; font-size: 14px;">Yuborilgan bildirishnomalar foydalanuvchilarning telefon-appini yoki veb-sahifasida ko'rinadi.</p>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div id="settings" class="admin-section">
+                <h2>⚙️ Sistem Sozlamalari</h2>
+                
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 20px;">📊 Statistika</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="statTotalUsers">0</div>
+                            <div class="stat-card-label">Jami Foydalanuvchi</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="statTotalDebts">0</div>
+                            <div class="stat-card-label">Jami Qarzlar</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="statTotalFirms">0</div>
+                            <div class="stat-card-label">Jami Firmalar</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="statTotalBalance">0 M</div>
+                            <div class="stat-card-label">Umumiy Balans</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #ff9800;">
+                    <strong>⚠️ Xavfli Amallar</strong>
+                    <p style="margin: 10px 0 0 0; font-size: 14px;">Quyidagi amallar tizimga ko'p ta'sir ko'rsatadi. Ehtiyot bo'ling!</p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="form-submit-btn" onclick="exportDatabase()" style="background: #2196F3; margin-bottom: 10px;">💾 Database'ni Yuklab Olish (JSON)</button>
+                    <button class="form-submit-btn" onclick="clearAllData()" style="background: #f44336;">🗑️ Barcha Ma'lumotlarni O'chirish (QAYTARIB BO'LMA!)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    
+    <!-- Edit Balance Modal -->
+    <div id="editBalanceModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeEditBalanceModal()">✕</button>
+            <h3>💰 Balans Tahrirlash</h3>
+            <div id="editBalanceError" class="error-message"></div>
+            <form onsubmit="handleEditBalance(event)">
+                <div class="form-group">
+                    <label>Yangi Balans (so'm)</label>
+                    <input type="number" id="editBalanceAmount" placeholder="0" min="0" required>
+                </div>
+                <button type="submit" class="form-submit-btn">✅ Yangilash</button>
+                <button type="button" class="form-submit-btn" onclick="closeEditBalanceModal()" style="background: #ccc; color: #333; margin-top: 10px;">❌ Bekor qilish</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeEditUserModal()">✕</button>
+            <h3>✏️ Foydalanuvchini Tahrirlash</h3>
+            <div id="editUserError" class="error-message"></div>
+            <form onsubmit="handleEditUser(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ism</label>
+                        <input type="text" id="editUserName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Familiya</label>
+                        <input type="text" id="editUserSurname" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="editUserEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" id="editUserPhone" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Yosh</label>
+                        <input type="number" id="editUserAge" min="0" max="150" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jins</label>
+                        <select id="editUserGender" required>
+                            <option value="Erkak">Erkak</option>
+                            <option value="Ayol">Ayol</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="form-submit-btn">✅ Yangilash</button>
+                <button type="button" class="form-submit-btn" onclick="closeEditUserModal()" style="background: #ccc; color: #333; margin-top: 10px;">❌ Bekor qilish</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeChangePasswordModal()">✕</button>
+            <h3>🔐 Parolni O'zgartirish</h3>
+            <div id="changePasswordError" class="error-message"></div>
+            <form onsubmit="handleChangePassword(event)">
+                <div class="form-group">
+                    <label>Yangi Parol</label>
+                    <input type="password" id="changePasswordNew" placeholder="Minimalda 6 belgi" minlength="6" required>
+                </div>
+                <button type="submit" class="form-submit-btn">✅ O'zgartirish</button>
+                <button type="button" class="form-submit-btn" onclick="closeChangePasswordModal()" style="background: #ccc; color: #333; margin-top: 10px;">❌ Bekor qilish</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="api-helper.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

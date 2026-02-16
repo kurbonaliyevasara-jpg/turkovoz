@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kirish | Ro'yxatdan o'tish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="config.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        :root {
+            --primary-green: #4ade80;
+            --hover-green: #22c55e;
+            --soft-green: #d1fae5;
+            --light-green-bg: #ecfdf5;
+            --white: #ffffff;
+            --error-red: #ef4444;
+            --success-green: #10b981;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(74, 222, 128, 0.15), 0 4px 6px -2px rgba(74, 222, 128, 0.08);
+            --shadow-xl: 0 20px 25px -5px rgba(74, 222, 128, 0.2), 0 10px 10px -5px rgba(74, 222, 128, 0.06);
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #d1fae5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        /* Animated background shapes */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -250px;
+            right: -200px;
+            animation: floatOrb1 25s ease-in-out infinite;
+            z-index: 0;
+            filter: blur(60px);
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -150px;
+            animation: floatOrb2 20s ease-in-out infinite;
+            z-index: 0;
+            filter: blur(60px);
+        }
+
+        /* Additional floating shapes */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            top: 10%;
+            left: 5%;
+            animation: rotate360 30s linear infinite, floatUpDown 15s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(225deg, #86efac, #4ade80);
+            top: 60%;
+            right: 10%;
+            animation: rotate360 25s linear infinite reverse, floatUpDown 12s ease-in-out infinite 2s;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #bbf7d0, #86efac);
+            bottom: 15%;
+            left: 50%;
+            animation: rotate360 35s linear infinite, floatUpDown 18s ease-in-out infinite 4s;
+        }
+
+        .shape-4 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(180deg, #d1fae5, #bbf7d0);
+            top: 40%;
+            right: 5%;
+            animation: rotate360 20s linear infinite reverse, floatUpDown 14s ease-in-out infinite 1s;
+        }
+
+        .shape-5 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(90deg, #a7f3d0, #6ee7b7);
+            top: 25%;
+            left: 60%;
+            animation: rotate360 28s linear infinite, floatUpDown 16s ease-in-out infinite 3s;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(74, 222, 128, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 20s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+        }
+
+        .particle-1 {
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .particle-2 {
+            top: 50%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .particle-3 {
+            top: 70%;
+            left: 25%;
+            animation-delay: 6s;
+        }
+
+        .particle-4 {
+            top: 30%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .particle-5 {
+            bottom: 25%;
+            right: 40%;
+            animation-delay: 4s;
+        }
+
+        .particle-6 {
+            top: 15%;
+            left: 45%;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatOrb1 {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(-50px, 50px) scale(1.2);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(30px, -30px) scale(0.9);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(-30px, -50px) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes floatOrb2 {
+            0%, 100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            33% {
+                transform: translate(40px, -40px) scale(1.15) rotate(120deg);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.85) rotate(240deg);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-30px) translateX(15px);
+            }
+            50% {
+                transform: translateY(20px) translateX(-15px);
+            }
+            75% {
+                transform: translateY(-15px) translateX(10px);
+            }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(30px, -50px) scale(1.5);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(-25px, -100px) scale(0.8);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translate(15px, -70px) scale(1.2);
+                opacity: 0.5;
+            }
+        }
+
+        /* Falling Money Animation */
+        .money-container {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .money {
+            position: absolute;
+            font-size: 28px;
+            color: var(--primary-green);
+            opacity: 0.85;
+            text-shadow: 
+                0 2px 12px rgba(74, 222, 128, 0.6),
+                0 0 20px rgba(74, 222, 128, 0.4);
+            font-weight: bold;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.85;
+            }
+            90% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Different money variations */
+        .money.small {
+            font-size: 22px;
+            opacity: 0.7;
+        }
+
+        .money.medium {
+            font-size: 28px;
+            opacity: 0.8;
+        }
+
+        .money.large {
+            font-size: 36px;
+            opacity: 0.9;
+        }
+
+        .money.swing-left {
+            animation: fall linear infinite, swingLeft linear infinite;
+        }
+
+        .money.swing-right {
+            animation: fall linear infinite, swingRight linear infinite;
+        }
+
+        @keyframes swingLeft {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(-30px) rotate(-15deg);
+            }
+            75% {
+                transform: translateX(30px) rotate(15deg);
+            }
+        }
+
+        @keyframes swingRight {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(30px) rotate(15deg);
+            }
+            75% {
+                transform: translateX(-30px) rotate(-15deg);
+            }
+        }
+
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px) saturate(130%);
+            -webkit-backdrop-filter: blur(8px) saturate(130%);
+            border-radius: 32px;
+            box-shadow: 
+                0 30px 60px -12px rgba(74, 222, 128, 0.18),
+                0 18px 36px -18px rgba(74, 222, 128, 0.1),
+                0 0 0 1px rgba(74, 222, 128, 0.06),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* Logo Section */
+        .auth-logo {
+            text-align: center;
+            padding: 40px 40px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .logo img {
+            width: 250px;
+            animation: logoPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 25px rgba(74, 222, 128, 0.3));
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                filter: drop-shadow(0 10px 25px rgba(74, 222, 128, 0.3));
+            }
+            50% {
+                transform: translateY(-10px);
+                filter: drop-shadow(0 25px 40px rgba(74, 222, 128, 0.5));
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--hover-green) 100%);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-lg);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 10px 25px -5px rgba(74, 222, 128, 0.3),
+                    0 5px 15px -5px rgba(74, 222, 128, 0.15);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 
+                    0 25px 40px -5px rgba(74, 222, 128, 0.4),
+                    0 15px 25px -5px rgba(74, 222, 128, 0.2);
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+        }
+
+        .auth-subtitle {
+            font-size: 15px;
+            color: var(--text-gray);
+            font-weight: 600;
+            text-shadow: 0 1px 4px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            padding: 24px 40px 0;
+            gap: 8px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 14px 24px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            position: relative;
+            font-family: inherit;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-green);
+            background: rgba(74, 222, 128, 0.08);
+        }
+
+        .tab-button.active {
+            color: var(--primary-green);
+            background: rgba(74, 222, 128, 0.15);
+        }
+
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--hover-green));
+            border-radius: 3px 3px 0 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -2px 12px rgba(74, 222, 128, 0.5);
+        }
+
+        /* Form Content */
+        .form-content {
+            padding: 32px 40px 40px;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid rgba(226, 232, 240, 0.6);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--text-dark);
+            background: rgba(255, 255, 255, 0.45);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.15);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input:focus + .floating-label,
+        .form-input:not(:placeholder-shown) + .floating-label {
+            transform: translateY(-32px) scale(0.85);
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .form-input.error {
+            border-color: var(--error-red);
+        }
+
+        .form-input.error:focus {
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-input.success {
+            border-color: var(--success-green);
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 16px;
+            top: 15px;
+            color: var(--text-gray);
+            font-size: 15px;
+            font-weight: 600;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0 4px;
+            transform-origin: left center;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-green);
+            background: rgba(74, 222, 128, 0.12);
+        }
+
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--error-red);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+            animation: shake 0.3s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .strength-bars {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .strength-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-bar.active {
+            background: var(--primary-green);
+        }
+
+        .strength-bar.active.weak {
+            background: var(--error-red);
+        }
+
+        .strength-bar.active.medium {
+            background: #f59e0b;
+        }
+
+        .strength-bar.active.strong {
+            background: var(--success-green);
+        }
+
+        .strength-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .strength-text.weak {
+            color: var(--error-red);
+        }
+
+        .strength-text.medium {
+            color: #f59e0b;
+        }
+
+        .strength-text.strong {
+            color: var(--success-green);
+        }
+
+        /* Checkbox */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-input {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-input:checked {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .checkbox-input:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--text-gray);
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--hover-green) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+            letter-spacing: 0.01em;
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 25px 40px -8px rgba(74, 222, 128, 0.4), 
+                0 15px 25px -8px rgba(74, 222, 128, 0.2);
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
+
+        .submit-button.loading .spinner {
+            display: block;
+        }
+
+        .submit-button.loading .button-text {
+            opacity: 0;
+            position: absolute;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .toast.success {
+            border-left-color: var(--success-green);
+        }
+
+        .toast.error {
+            border-left-color: var(--error-red);
+        }
+
+        .toast.info {
+            border-left-color: var(--primary-green);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toast-icon.success {
+            color: var(--success-green);
+        }
+
+        .toast-icon.error {
+            color: var(--error-red);
+        }
+
+        .toast-icon.info {
+            color: var(--primary-green);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        /* Footer Link */
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(226, 232, 240, 0.4);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-link {
+            color: var(--primary-green);
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 4px;
+        }
+
+        .footer-link:hover {
+            color: var(--hover-green);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+                min-height: 100vh;
+                height: 100vh;
+            }
+
+            /* Make shapes more visible on mobile */
+            .shape {
+                opacity: 0.2;
+                filter: blur(30px);
+            }
+
+            .particle {
+                width: 10px;
+                height: 10px;
+                background: rgba(74, 222, 128, 0.8);
+                box-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
+            }
+
+            body::before {
+                filter: blur(40px);
+                opacity: 0.8;
+            }
+
+            body::after {
+                filter: blur(40px);
+                opacity: 0.8;
+            }
+
+            .auth-container {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .auth-card {
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(6px) saturate(120%);
+                -webkit-backdrop-filter: blur(6px) saturate(120%);
+            }
+
+            .form-input {
+                background: rgba(255, 255, 255, 0.4);
+                font-weight: 600;
+            }
+
+            .form-input:focus {
+                background: rgba(255, 255, 255, 0.65);
+            }
+
+            .auth-logo {
+                padding: 24px 20px 0;
+            }
+
+            .logo img {
+                width: 220px !important;
+            }
+
+            .auth-title {
+                font-size: 22px;
+                margin-bottom: 6px;
+            }
+
+            .auth-subtitle {
+                font-size: 13px;
+            }
+
+            .tab-navigation {
+                padding: 16px 20px 0;
+            }
+
+            .tab-button {
+                padding: 11px 18px;
+                font-size: 13px;
+            }
+
+            .form-content {
+                padding: 20px 20px 24px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .form-input {
+                padding: 12px 13px;
+                font-size: 14px;
+            }
+
+            .floating-label {
+                font-size: 13px;
+                left: 13px;
+                top: 13px;
+            }
+
+            .checkbox-wrapper {
+                margin-bottom: 16px;
+            }
+
+            .submit-button {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+
+            .auth-footer {
+                margin-top: 16px;
+                padding-top: 16px;
+            }
+
+            .footer-text {
+                font-size: 13px;
+            }
+
+            .toast-container {
+                top: 16px;
+                right: 16px;
+                left: 16px;
+            }
+
+            .toast {
+                min-width: auto;
+            }
+
+            .password-strength {
+                margin-top: 10px;
+            }
+
+            .strength-bars {
+                margin-bottom: 6px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body {
+                padding: 10px;
+            }
+
+            .auth-logo {
+                padding: 20px 16px 0;
+            }
+
+            .logo img {
+                width: 200px !important;
+            }
+
+            .auth-title {
+                font-size: 20px;
+            }
+
+            .auth-subtitle {
+                font-size: 12px;
+            }
+
+            .tab-navigation {
+                padding: 14px 16px 0;
+                gap: 6px;
+            }
+
+            .tab-button {
+                font-size: 12px;
+                padding: 10px 14px;
+            }
+
+            .form-content {
+                padding: 18px 16px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-input {
+                font-size: 13px;
+                padding: 11px 12px;
+            }
+
+            .floating-label {
+                font-size: 12px;
+            }
+
+            .checkbox-wrapper {
+                margin-bottom: 14px;
+            }
+
+            .checkbox-label {
+                font-size: 12px;
+            }
+
+            .submit-button {
+                padding: 13px 16px;
+                font-size: 14px;
+            }
+
+            .auth-footer {
+                margin-top: 14px;
+                padding-top: 14px;
+            }
+
+            .footer-text, .footer-link {
+                font-size: 12px;
+            }
+        }
+
+        /* Accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Falling Money -->
+    <div class="money-container" id="moneyContainer"></div>
+
+    <!-- Background Shapes -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+        <div class="particle particle-5"></div>
+        <div class="particle particle-6"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Auth Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo Section -->
+            <div class="auth-logo">
+                <div class="logo">
+                    <img src="./logo.png" width="200px" alt="">
+                    </svg>
+                </div>
+                <h1 class="auth-title">Xush kelibsiz</h1>
+                <p class="auth-subtitle">Davom etish uchun tizimga kiring</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="login" id="loginTab">
+                    Kirish
+                </button>
+                <button class="tab-button" data-tab="register" id="registerTab">
+                    Ro'yxatdan o'tish
+                </button>
+                <div class="tab-indicator" id="tabIndicator"></div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="form-content">
+                <!-- Login Form -->
+                <div class="tab-panel active" id="loginPanel">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    class="form-input" 
+                                    id="loginEmail" 
+                                    placeholder=" "
+                                    autocomplete="email"
+                                    required
+                                >
+                                <label class="floating-label">Email manzil</label>
+                            </div>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    class="form-input" 
+                                    id="loginPassword" 
+                                    placeholder=" "
+                                    autocomplete="current-password"
+                                    required
+                                >
+                                <label class="floating-label">Parol</label>
+                                <button type="button" class="password-toggle" data-target="loginPassword">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox-input" id="rememberMe">
+                            <label class="checkbox-label" for="rememberMe">Meni eslab qol</label>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="loginSubmitBtn">
+                            <div class="button-content">
+                                <span class="spinner"></span>
+                                <span class="button-text">Tizimga kirish</span>
+                            </div>
+                        </button>
+
+                        <div class="auth-footer">
+                            <span class="footer-text">Hisobingiz yo'qmi?</span>
+                            <a href="#" class="footer-link" id="switchToRegister">Ro'yxatdan o'tish</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="tab-panel" id="registerPanel">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    class="form-input" 
+                                    id="registerName" 
+                                    placeholder=" "
+                                    autocomplete="given-name"
+                                    required
+                                >
+                                <label class="floating-label">Ism</label>
+                            </div>
+                            <div class="error-message" id="registerNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    class="form-input" 
+                                    id="registerSurname" 
+                                    placeholder=" "
+                                    autocomplete="family-name"
+                                    required
+                                >
+                                <label class="floating-label">Familya</label>
+                            </div>
+                            <div class="error-message" id="registerSurnameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    class="form-input" 
+                                    id="registerEmail" 
+                                    placeholder=" "
+                                    autocomplete="email"
+                                    required
+                                >
+                                <label class="floating-label">Email manzil</label>
+                            </div>
+                            <div class="error-message" id="registerEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    class="form-input" 
+                                    id="registerPassword" 
+                                    placeholder=" "
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <label class="floating-label">Parol</label>
+                                <button type="button" class="password-toggle" data-target="registerPassword">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bars">
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                    <div class="strength-bar"></div>
+                                </div>
+                                <div class="strength-text" id="strengthText">Kuchli parol kiriting</div>
+                            </div>
+                            <div class="error-message" id="registerPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    class="form-input" 
+                                    id="confirmPassword" 
+                                    placeholder=" "
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <label class="floating-label">Parolni tasdiqlash</label>
+                                <button type="button" class="password-toggle" data-target="confirmPassword">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+
+                        <button type="submit" class="submit-button" id="registerSubmitBtn">
+                            <div class="button-content">
+                                <span class="spinner"></span>
+                                <span class="button-text">Ro'yxatdan o'tish</span>
+                            </div>
+                        </button>
+
+                        <div class="auth-footer">
+                            <span class="footer-text">Hisobingiz bormi?</span>
+                            <a href="#" class="footer-link" id="switchToLogin">Tizimga kirish</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== Falling Money Animation ====================
+        const moneyContainer = document.getElementById('moneyContainer');
+        const moneySymbols = ['$', '$', '$', '$', '$']; // All dollars
+
+        function createMoney() {
+            const money = document.createElement('div');
+            money.className = 'money';
+            
+            // Random size
+            const sizeClasses = ['small', 'medium', 'large'];
+            const randomSize = sizeClasses[Math.floor(Math.random() * sizeClasses.length)];
+            money.classList.add(randomSize);
+            
+            // Random swing animation
+            if (Math.random() > 0.5) {
+                money.classList.add(Math.random() > 0.5 ? 'swing-left' : 'swing-right');
+            }
+            
+            // Random position
+            money.style.left = Math.random() * 100 + '%';
+            
+            // Random duration (slower for more visible effect)
+            const duration = 8 + Math.random() * 8; // 8-16 seconds
+            money.style.animationDuration = duration + 's';
+            
+            // Random delay
+            money.style.animationDelay = Math.random() * 2 + 's';
+            
+            // Set symbol
+            money.textContent = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
+            
+            moneyContainer.appendChild(money);
+            
+            // Remove after animation
+            setTimeout(() => {
+                money.remove();
+            }, (duration + 2) * 1000);
+        }
+
+        // Create initial batch of money
+        function initMoney() {
+            // Create 40 money elements initially (increased from 30)
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    createMoney();
+                }, i * 150); // Faster stagger
+            }
+        }
+
+        // Continuously create new money
+        function continuousMoney() {
+            setInterval(() => {
+                createMoney();
+            }, 400); // Create new money every 400ms (faster)
+        }
+
+        // Start money rain
+        initMoney();
+        continuousMoney();
+
+        // ==================== Tab Switching ====================
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginPanel = document.getElementById('loginPanel');
+        const registerPanel = document.getElementById('registerPanel');
+        const tabIndicator = document.getElementById('tabIndicator');
+        const switchToRegister = document.getElementById('switchToRegister');
+        const switchToLogin = document.getElementById('switchToLogin');
+
+        function updateTabIndicator(tab) {
+            const tabRect = tab.getBoundingClientRect();
+            const navRect = tab.parentElement.getBoundingClientRect();
+            const left = tabRect.left - navRect.left;
+            const width = tabRect.width;
+            
+            tabIndicator.style.left = `${left}px`;
+            tabIndicator.style.width = `${width}px`;
+        }
+
+        function switchTab(tabName) {
+            if (tabName === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginPanel.classList.add('active');
+                registerPanel.classList.remove('active');
+                updateTabIndicator(loginTab);
+                resetForm('register');
+                setTimeout(() => {
+                    loginTab.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            } else {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerPanel.classList.add('active');
+                loginPanel.classList.remove('active');
+                updateTabIndicator(registerTab);
+                resetForm('login');
+                setTimeout(() => {
+                    registerTab.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        loginTab.addEventListener('click', () => switchTab('login'));
+        registerTab.addEventListener('click', () => switchTab('register'));
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab('register');
+        });
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab('login');
+        });
+
+        // Initialize tab indicator
+        window.addEventListener('load', () => {
+            updateTabIndicator(loginTab);
+        });
+
+        window.addEventListener('resize', () => {
+            const activeTab = document.querySelector('.tab-button.active');
+            updateTabIndicator(activeTab);
+        });
+
+        // ==================== Password Toggle ====================
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const eyeIcon = this.querySelector('.eye-icon');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    eyeIcon.innerHTML = `
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    `;
+                } else {
+                    input.type = 'password';
+                    eyeIcon.innerHTML = `
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    `;
+                }
+            });
+        });
+
+        // ==================== Password Strength Checker ====================
+        const registerPassword = document.getElementById('registerPassword');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const strengthText = document.getElementById('strengthText');
+        const strengthBars = document.querySelectorAll('.strength-bar');
+
+        function checkPasswordStrength(password) {
+            if (password.length === 0) {
+                passwordStrength.classList.remove('show');
+                return;
+            }
+
+            passwordStrength.classList.add('show');
+
+            let strength = 0;
+            const criteria = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[^A-Za-z0-9]/.test(password)
+            };
+
+            strength = Object.values(criteria).filter(Boolean).length;
+
+            strengthBars.forEach((bar, index) => {
+                bar.classList.remove('active', 'weak', 'medium', 'strong');
+                if (index < strength) {
+                    bar.classList.add('active');
+                    if (strength <= 2) bar.classList.add('weak');
+                    else if (strength === 3) bar.classList.add('medium');
+                    else bar.classList.add('strong');
+                }
+            });
+
+            strengthText.className = 'strength-text';
+            if (strength <= 2) {
+                strengthText.textContent = 'Zaif parol';
+                strengthText.classList.add('weak');
+            } else if (strength === 3) {
+                strengthText.textContent = "O'rtacha parol";
+                strengthText.classList.add('medium');
+            } else {
+                strengthText.textContent = 'Kuchli parol';
+                strengthText.classList.add('strong');
+            }
+        }
+
+        registerPassword.addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value);
+        });
+
+        // ==================== Toast Notification System ====================
+        const toastContainer = document.getElementById('toastContainer');
+
+        function showToast(type, title, message, duration = 4000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let iconSVG = '';
+            if (type === 'success') {
+                iconSVG = `<svg class="toast-icon success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>`;
+            } else if (type === 'error') {
+                iconSVG = `<svg class="toast-icon error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>`;
+            } else {
+                iconSVG = `<svg class="toast-icon info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>`;
+            }
+
+            toast.innerHTML = `
+                ${iconSVG}
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) reverse';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, duration);
+        }
+
+        // ==================== Form Validation ====================
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.add('error');
+            input.classList.remove('success');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+
+        function clearError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.remove('error');
+            error.classList.remove('show');
+            
+            if (input.value.trim()) {
+                input.classList.add('success');
+            }
+        }
+
+        function resetForm(formType) {
+            if (formType === 'login') {
+                document.getElementById('loginForm').reset();
+                clearError('loginEmail', 'loginEmailError');
+                clearError('loginPassword', 'loginPasswordError');
+                document.getElementById('loginEmail').classList.remove('success');
+                document.getElementById('loginPassword').classList.remove('success');
+            } else {
+                document.getElementById('registerForm').reset();
+                clearError('registerName', 'registerNameError');
+                clearError('registerEmail', 'registerEmailError');
+                clearError('registerPassword', 'registerPasswordError');
+                clearError('confirmPassword', 'confirmPasswordError');
+                document.getElementById('registerName').classList.remove('success');
+                document.getElementById('registerEmail').classList.remove('success');
+                document.getElementById('registerPassword').classList.remove('success');
+                document.getElementById('confirmPassword').classList.remove('success');
+                passwordStrength.classList.remove('show');
+            }
+        }
+
+        // ==================== Login Form Submit ====================
+        const loginForm = document.getElementById('loginForm');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            let isValid = true;
+
+            // Clear previous errors
+            clearError('loginEmail', 'loginEmailError');
+            clearError('loginPassword', 'loginPasswordError');
+
+            // Validate email
+            if (!email) {
+                showError('loginEmail', 'loginEmailError', 'Email manzilni kiriting');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('loginEmail', 'loginEmailError', "Email manzil noto'g'ri");
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                showError('loginPassword', 'loginPasswordError', 'Parolni kiriting');
+                isValid = false;
+            } else if (password.length < 6) {
+                showError('loginPassword', 'loginPasswordError', "Parol juda qisqa");
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Show loading state
+                loginSubmitBtn.classList.add('loading');
+
+                try {
+                    // API call to backend
+                    const response = await fetch(`${CONFIG.API_URL}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.user) {
+                        // Store user data in localStorage
+                        localStorage.setItem('currentUser', JSON.stringify(data.user));
+                        localStorage.setItem('userEmail', email);
+                        
+                        showToast('success', 'Muvaffaqiyatli!', 'Tizimga muvaffaqiyatli kirdingiz');
+                        
+                        // Redirect to dashboard
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        showError('loginEmail', 'loginEmailError', data.message || 'Email yoki parol noto\'g\'ri');
+                        loginSubmitBtn.classList.remove('loading');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showError('loginEmail', 'loginEmailError', 'Serverga ulanishda xato');
+                    loginSubmitBtn.classList.remove('loading');
+                }
+            }
+        });
+
+        // ==================== Register Form Submit ====================
+        const registerForm = document.getElementById('registerForm');
+        const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value.trim();
+            const surname = document.getElementById('registerSurname').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            let isValid = true;
+
+            // Clear previous errors
+            clearError('registerName', 'registerNameError');
+            clearError('registerSurname', 'registerSurnameError');
+            clearError('registerEmail', 'registerEmailError');
+            clearError('registerPassword', 'registerPasswordError');
+            clearError('confirmPassword', 'confirmPasswordError');
+
+            // Validate name
+            if (!name) {
+                showError('registerName', 'registerNameError', 'Ismingizni kiriting');
+                isValid = false;
+            } else if (name.length < 2) {
+                showError('registerName', 'registerNameError', 'Ism juda qisqa');
+                isValid = false;
+            }
+
+            // Validate surname
+            if (!surname) {
+                showError('registerSurname', 'registerSurnameError', 'Familyangizni kiriting');
+                isValid = false;
+            } else if (surname.length < 2) {
+                showError('registerSurname', 'registerSurnameError', 'Familya juda qisqa');
+                isValid = false;
+            }
+
+            // Validate email
+            if (!email) {
+                showError('registerEmail', 'registerEmailError', 'Email manzilni kiriting');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('registerEmail', 'registerEmailError', "Email manzil noto'g'ri");
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                showError('registerPassword', 'registerPasswordError', 'Parolni kiriting');
+                isValid = false;
+            } else if (password.length < 8) {
+                showError('registerPassword', 'registerPasswordError', 'Parol kamida 8 ta belgidan iborat bo\'lishi kerak');
+                isValid = false;
+            }
+
+            // Validate confirm password
+            if (!confirmPass) {
+                showError('confirmPassword', 'confirmPasswordError', 'Parolni tasdiqlang');
+                isValid = false;
+            } else if (password !== confirmPass) {
+                showError('confirmPassword', 'confirmPasswordError', 'Parollar mos kelmadi');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Show loading state
+                registerSubmitBtn.classList.add('loading');
+
+                try {
+                    // API call to backend - register user
+                    const response = await fetch(`${CONFIG.API_URL}/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            surname: surname,
+                            email: email,
+                            password: password,
+                            phone: '',
+                            age: 0,
+                            gender: '',
+                            gmail: email
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showToast('success', 'Muvaffaqiyatli!', "Ro'yxatdan o'tish muvaffaqiyatli yakunlandi");
+                        
+                        // Clear form
+                        registerForm.reset();
+                        
+                        // Switch to login tab after 1.5 seconds
+                        setTimeout(() => {
+                            switchTab('login');
+                            // Pre-fill login email
+                            document.getElementById('loginEmail').value = email;
+                            document.getElementById('loginEmail').focus();
+                        }, 1500);
+                        
+                        registerSubmitBtn.classList.remove('loading');
+                    } else {
+                        showError('registerEmail', 'registerEmailError', data.message || 'Ro\'yxatdan o\'tishda xato');
+                        registerSubmitBtn.classList.remove('loading');
+                    }
+                } catch (error) {
+                    console.error('Register error:', error);
+                    showError('registerEmail', 'registerEmailError', 'Serverga ulanishda xato');
+                    registerSubmitBtn.classList.remove('loading');
+                }
+            }
+        });
+
+        // ==================== Real-time Validation ====================
+        // Login form
+        document.getElementById('loginEmail').addEventListener('blur', function() {
+            if (this.value.trim() && !validateEmail(this.value.trim())) {
+                showError('loginEmail', 'loginEmailError', "Email manzil noto'g'ri");
+            } else if (this.value.trim()) {
+                clearError('loginEmail', 'loginEmailError');
+            }
+        });
+
+        document.getElementById('loginPassword').addEventListener('blur', function() {
+            if (this.value && this.value.length < 6) {
+                showError('loginPassword', 'loginPasswordError', "Parol juda qisqa");
+            } else if (this.value) {
+                clearError('loginPassword', 'loginPasswordError');
+            }
+        });
+
+        // Register form
+        document.getElementById('registerName').addEventListener('blur', function() {
+            if (this.value.trim() && this.value.trim().length < 2) {
+                showError('registerName', 'registerNameError', 'Ism juda qisqa');
+            } else if (this.value.trim()) {
+                clearError('registerName', 'registerNameError');
+            }
+        });
+
+        document.getElementById('registerEmail').addEventListener('blur', function() {
+            if (this.value.trim() && !validateEmail(this.value.trim())) {
+                showError('registerEmail', 'registerEmailError', "Email manzil noto'g'ri");
+            } else if (this.value.trim()) {
+                clearError('registerEmail', 'registerEmailError');
+            }
+        });
+
+        document.getElementById('registerPassword').addEventListener('blur', function() {
+            if (this.value && this.value.length < 8) {
+                showError('registerPassword', 'registerPasswordError', 'Parol kamida 8 ta belgidan iborat bo\'lishi kerak');
+            } else if (this.value) {
+                clearError('registerPassword', 'registerPasswordError');
+            }
+        });
+
+        document.getElementById('confirmPassword').addEventListener('blur', function() {
+            const password = document.getElementById('registerPassword').value;
+            if (this.value && this.value !== password) {
+                showError('confirmPassword', 'confirmPasswordError', 'Parollar mos kelmadi');
+            } else if (this.value) {
+                clearError('confirmPassword', 'confirmPasswordError');
+            }
+        });
+    </script>
+</body>
+</html>
